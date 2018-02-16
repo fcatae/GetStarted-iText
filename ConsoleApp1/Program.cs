@@ -34,11 +34,19 @@ namespace ConsoleApp1
             Console.WriteLine();
 
             Console.WriteLine("============================================================");
-            Console.WriteLine("ReadLinesFromListener");
+            Console.WriteLine("ShowLinesFromListener");
             Console.WriteLine("============================================================");
-            ReadLinesFromListener(filename);
+            ShowLinesFromListener(filename);
             Console.WriteLine();
 
+            Console.ReadKey();
+            Console.WriteLine();
+
+            Console.WriteLine("============================================================");
+            Console.WriteLine("AnalyzeTextFromListener");
+            Console.WriteLine("============================================================");
+            AnalyzeTextFromListener(filename);
+            Console.WriteLine();
         }
 
         static string ReadTextFromPdf(string filename)
@@ -63,7 +71,7 @@ namespace ConsoleApp1
             }
         }
 
-        static void ReadLinesFromListener(string filename)
+        static void ShowLinesFromListener(string filename)
         {
             using (var pdf = new PdfDocument(new PdfReader(filename)))
             {
@@ -75,5 +83,16 @@ namespace ConsoleApp1
             }
         }
 
+        static void AnalyzeTextFromListener(string filename)
+        {
+            using (var pdf = new PdfDocument(new PdfReader(filename)))
+            {
+                var page = pdf.GetFirstPage();
+
+                var parser = new PdfCanvasProcessor(new AnalyzeTextListener());
+
+                parser.ProcessPageContent(page);
+            }
+        }
     }
 }
