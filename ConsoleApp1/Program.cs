@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
@@ -11,44 +12,23 @@ namespace ConsoleApp1
         {
             Console.WriteLine("Hello World!");
 
-            string filename = "samples/p40.pdf";
+            var files = Directory.GetFiles("output-d14","*.pdf");
+            //string filename = "samples/p42.pdf";
 
-            string simpleResult = ReadTextFromPdf(filename);
+            foreach (var file in files)
+            {
+                string filename = file;
 
-            Console.WriteLine("============================================================");
-            Console.WriteLine("ReadTextFromPdf");
-            Console.WriteLine("============================================================");
-            Console.WriteLine(simpleResult.Substring(0, 1000));
-            Console.WriteLine();
+                Console.WriteLine("============================================================");
+                Console.WriteLine($"Generating Image from PDF - {file}");
+                Console.WriteLine("============================================================");
+                Console.WriteLine(PDFConverter.ConvertAsync(filename, "50x50").GetAwaiter().GetResult());
+                PDFConverter.ClusterFilesAsync(filename).GetAwaiter().GetResult();
+                Console.WriteLine();
+            }
 
-            Console.ReadKey();
-            Console.WriteLine();
 
-            Console.WriteLine("============================================================");
-            Console.WriteLine("ReadTextFromListener");
-            Console.WriteLine("============================================================");
-            ReadTextFromListener(filename);
-            Console.WriteLine();
-
-            Console.ReadKey();
-            Console.WriteLine();
-
-            Console.WriteLine("============================================================");
-            Console.WriteLine("ShowLinesFromListener");
-            Console.WriteLine("============================================================");
-            ShowLinesFromListener(filename);
-            Console.WriteLine();
-
-            Console.ReadKey();
-            Console.WriteLine();
-
-            Console.WriteLine("============================================================");
-            Console.WriteLine("AnalyzeTextFromListener");
-            Console.WriteLine("============================================================");
-            AnalyzeTextFromListener(filename);
-            Console.WriteLine();
         }
-
         static string ReadTextFromPdf(string filename)
         {
             using (var pdf = new PdfDocument(new PdfReader(filename)))
