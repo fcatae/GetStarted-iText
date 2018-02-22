@@ -1,5 +1,7 @@
-Desafio: Gerar os arquivos XML correspondentes ao documento p40.pdf
-=====================================================================
+Desafio: Gerar os arquivos XML a partir de PDF
+================================================
+
+Exemplo: Documento _p40.pdf_ ([download](ConsoleApp1/samples/p40.pdf))
 
 Nesse documento, existem 6 atos (total de 8 ao somar um incompleto e uma retificação), que são na ordem:
 - Portaria No 13
